@@ -7,6 +7,7 @@ import com.jb.helpdesk.repositories.PessoaRepository;
 import com.jb.helpdesk.repositories.TecnicoRepository;
 import com.jb.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.jb.helpdesk.services.exceptions.ObjectNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,24 @@ public class TecnicoService {
         validaTecnico(objDTO);
         Tecnico newObj = new Tecnico(objDTO);
         return tecnicoRepository.save(newObj);
+    }
+
+    public Tecnico update(Integer id,@Valid TecnicoDTO objDTO) {
+        objDTO.setId(id);
+        Tecnico oldObj = findById(id);
+        //validaTecnico(objDTO);
+        oldObj = new Tecnico(objDTO);
+        return tecnicoRepository.save(oldObj);
+    }
+
+    public void delete(Integer id) {
+        Tecnico tecnico = findById(id);
+
+        if (!tecnico.getChamados().isEmpty()) {
+            throw new DataIntegrityViolationException("O tecnico possui ordens de servico e não pode ser deletado!");
+        }
+        tecnicoRepository.deleteById(id);
+
     }
 
     private void validaTecnico(TecnicoDTO tecnicoDTO) {

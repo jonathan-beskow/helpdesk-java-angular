@@ -1,6 +1,5 @@
 package com.jb.helpdesk.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jb.helpdesk.domain.enums.Perfil;
 import com.jb.helpdesk.dto.TecnicoDTO;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class Tecnico extends Pessoa{
+public class Tecnico extends Pessoa {
 
     @JsonIgnore
     @OneToMany(mappedBy = "tecnico")
