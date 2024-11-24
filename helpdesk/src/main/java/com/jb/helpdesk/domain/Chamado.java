@@ -3,6 +3,7 @@ package com.jb.helpdesk.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jb.helpdesk.domain.enums.Prioridade;
 import com.jb.helpdesk.domain.enums.Status;
+import com.jb.helpdesk.dto.ChamadoDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,6 +23,14 @@ public class Chamado implements Serializable {
     private Status status;
     private String observacoes;
     private String titulo;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
@@ -44,6 +53,7 @@ public class Chamado implements Serializable {
         this.tecnico = tecnico;
         this.cliente = cliente;
     }
+
 
     public Integer getId() {
         return id;
