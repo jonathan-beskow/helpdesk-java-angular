@@ -10,6 +10,7 @@ import com.jb.helpdesk.repositories.ChamadoRepository;
 import com.jb.helpdesk.repositories.ClienteRepository;
 import com.jb.helpdesk.repositories.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -26,34 +27,16 @@ public class DBService {
     @Autowired
     private TecnicoRepository tecnicoRepository;
 
-//    public void instanciaDB(){
-//        Tecnico tec1 = new Tecnico("123", "tecnico@tecnico.com", "29223172004", "John", null);
-//        Tecnico tec2 = new Tecnico("456", "tecnico2@tecnico.com", "48842358002", "Carlito", null);
-//        Tecnico tec3 = new Tecnico("789", "tecnico3@tecnico.com", "72339913080", "Carlito", null);
-//        tec1.addPerfil(Perfil.ADMIN);
-//        tec2.addPerfil(Perfil.TECNICO);
-//        tec3.addPerfil(Perfil.TECNICO);
-//
-//        Cliente cli1 = new Cliente("123","linus@email.com","18716473043","Linus Torvalds",null);
-//
-//        Cliente cli2 = new Cliente("456","marcio@email.com","35261863082","Marcio Francisco",null);
-//
-//        Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO,"Chamado 01", "Primeiro chamado",tec1, cli1 );
-//
-//        Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ENCERRADO,"Chamado 02", "Segundo chamado",tec2, cli1 );
-//
-//        tecnicoRepository.saveAll(Arrays.asList(tec1, tec2, tec3));
-//        clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-//        chamadoRepository.saveAll(Arrays.asList(c1, c2));
-//    }
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public void instanciaDB() {
         // Criando Técnicos
-        Tecnico tec1 = new Tecnico("123", "tecnico@tecnico.com", "29223172004", "John", null);
-        Tecnico tec2 = new Tecnico("456", "tecnico2@tecnico.com", "48842358002", "Carlito", null);
-        Tecnico tec3 = new Tecnico("789", "tecnico3@tecnico.com", "28174173056", "Maria", null);
-        Tecnico tec4 = new Tecnico("101", "tecnico4@tecnico.com", "90774335033", "Julia", null);
-        Tecnico tec5 = new Tecnico("102", "tecnico5@tecnico.com", "01976919002", "Carlos Silva", null);
+        Tecnico tec1 = new Tecnico(encoder.encode("123"), "tecnico@tecnico.com", "29223172004", "John", null);
+        Tecnico tec2 = new Tecnico(encoder.encode("456"), "tecnico2@tecnico.com", "48842358002", "Carlito", null);
+        Tecnico tec3 = new Tecnico(encoder.encode("789"), "tecnico3@tecnico.com", "28174173056", "Maria", null);
+        Tecnico tec4 = new Tecnico(encoder.encode("321"), "tecnico4@tecnico.com", "90774335033", "Julia", null);
+        Tecnico tec5 = new Tecnico(encoder.encode("654"), "tecnico5@tecnico.com", "01976919002", "Carlos Silva", null);
 
         // Adicionando Perfis
         tec1.addPerfil(Perfil.ADMIN);
@@ -63,11 +46,11 @@ public class DBService {
         tec5.addPerfil(Perfil.ADMIN);
 
         // Criando Clientes
-        Cliente cli1 = new Cliente("123", "linus@email.com", "51746260076", "Linus Torvalds", null);
-        Cliente cli2 = new Cliente("456", "marcio@email.com", "84963008033", "Marcio Francisco", null);
-        Cliente cli3 = new Cliente("789", "ana@email.com", "14507777089", "Ana Silva", null);
-        Cliente cli4 = new Cliente("101", "jose@email.com", "54768536000", "José Almeida", null);
-        Cliente cli5 = new Cliente("102", "claudia@email.com", "88828925060", "Claudia Mendes", null);
+        Cliente cli1 = new Cliente(encoder.encode("123"), "linus@email.com", "51746260076", "Linus Torvalds", null);
+        Cliente cli2 = new Cliente(encoder.encode("456"), "marcio@email.com", "84963008033", "Marcio Francisco", null);
+        Cliente cli3 = new Cliente(encoder.encode("789"), "ana@email.com", "14507777089", "Ana Silva", null);
+        Cliente cli4 = new Cliente(encoder.encode("321"), "jose@email.com", "54768536000", "José Almeida", null);
+        Cliente cli5 = new Cliente(encoder.encode("654"), "claudia@email.com", "88828925060", "Claudia Mendes", null);
 
         // Criando Chamados
         Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 01", "Primeiro chamado", tec1, cli1);

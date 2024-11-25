@@ -9,6 +9,7 @@ import com.jb.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.jb.helpdesk.services.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class TecnicoService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Tecnico findById(Integer id) {
         Optional<Tecnico> objeto = tecnicoRepository.findById(id);
         return objeto.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "+id));
@@ -36,12 +40,14 @@ public class TecnicoService {
     public Tecnico create(TecnicoDTO objDTO){
         objDTO.setId(null);
         validaTecnico(objDTO);
+
         Tecnico newObj = new Tecnico(objDTO);
         return tecnicoRepository.save(newObj);
     }
 
     public Tecnico update(Integer id,@Valid TecnicoDTO objDTO) {
         objDTO.setId(id);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         Tecnico oldObj = findById(id);
         //validaTecnico(objDTO);
         oldObj = new Tecnico(objDTO);
