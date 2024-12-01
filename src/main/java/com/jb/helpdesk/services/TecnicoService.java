@@ -50,7 +50,7 @@ public class TecnicoService {
         Tecnico oldObj = findById(id);
         //validaTecnico(objDTO);
 
-        if (!objDTO.getSenha().equal(oldObj.getSenha())) {
+        if (!objDTO.getSenha().equals(oldObj.getSenha())) {
             objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         }
 
