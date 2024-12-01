@@ -47,9 +47,13 @@ public class TecnicoService {
 
     public Tecnico update(Integer id,@Valid TecnicoDTO objDTO) {
         objDTO.setId(id);
-        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         Tecnico oldObj = findById(id);
         //validaTecnico(objDTO);
+
+        if (!objDTO.getSenha().equal(oldObj.getSenha())) {
+            objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+        }
+
         oldObj = new Tecnico(objDTO);
         return tecnicoRepository.save(oldObj);
     }
